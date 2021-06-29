@@ -1,0 +1,25 @@
+{
+  "name": "twitter-clone",
+  "version": "1.0.0",
+  "description": "twitterr clone",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon ./app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rajneesh-9088/twitter-clone.git"
+  },
+  "author": "rajneesh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rajneesh-9088/twitter-clone/issues"
+  },
+  "homepage": "https://github.com/Rajneesh-9088/twitter-clone#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.15",
+    "nodemon": "^2.0.7"
+  }
+}

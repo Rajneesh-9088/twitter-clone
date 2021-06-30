@@ -3,6 +3,9 @@ const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
 const session = require('express-session')
+const passport = require('passport');
+const LocalStrategy = require('passport-local')
+const User = require('./models/user');
 
 // db connection
 mongoose
@@ -29,6 +32,17 @@ app.use(session({
   saveUninitialized: true,
  
 }))
+
+ // for initialize and for session we are using 
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// strategy of passport 
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use(authRoutes);
 

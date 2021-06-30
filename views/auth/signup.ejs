@@ -1,0 +1,46 @@
+<%- include("../partials/header") %>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6 mt-3" >
+            <h4 class="display-6" style="color: #0099ff">Sign Up</h4>
+            <form action="/register" method="post">
+                <div class="mb-3">
+
+                    <input type="text" class="form-control" name="firstname" placeholder="First Name">
+                    
+                </div>
+
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="lastname" placeholder="Last Name">
+                </div>
+                
+                <div class="mb-3">
+                    <input type="email" class="form-control" name="email" placeholder=" Email">
+                </div>
+
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="Username">
+                </div>
+
+                <div class="mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+            </form>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+</div>
+
+
+
+
+
+
+<% include("../partials/footer") %>

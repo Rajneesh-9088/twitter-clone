@@ -20,6 +20,7 @@ mongoose
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
+app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.urlencoded({extended:true}));
 
 // routes
@@ -47,7 +48,13 @@ passport.deserializeUser(User.deserializeUser());
 app.use(authRoutes);
 
 app.get("/", (req, res) => {
-  res.render("home");
+
+  if(!req.isAuthenticated()){
+     return res.redirect('/login');
+  }else{
+    res.render("home");
+  }
+ 
 });
 
 

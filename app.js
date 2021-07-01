@@ -6,6 +6,8 @@ const session = require('express-session')
 const passport = require('passport');
 const LocalStrategy = require('passport-local')
 const User = require('./models/user');
+const {isLoggedIn} = require('./middleware');
+const flash = require('connect-flash')
 
 // db connection
 mongoose
@@ -36,9 +38,10 @@ app.use(session({
 
  // for initialize and for session we are using 
 
-
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 // strategy of passport 
 passport.use(new LocalStrategy(User.authenticate()));
@@ -47,13 +50,9 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(authRoutes);
 
-app.get("/", (req, res) => {
+app.get("/", isLoggedIn,  (req, res) => {
 
-  if(!req.isAuthenticated()){
-     return res.redirect('/login');
-  }else{
-    res.render("home");
-  }
+ res.render('home');
  
 });
 

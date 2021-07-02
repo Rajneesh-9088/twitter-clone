@@ -26,8 +26,11 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.urlencoded({extended:true}));
 
 // routes
-
 const authRoutes = require('./routes/authRoutes');
+
+//APIs
+const postApi = require('./routes/api/post')
+
 
 app.use(session({
   secret: 'youcantfindmysecret',
@@ -48,7 +51,13 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// using routes
 app.use(authRoutes);
+
+//using apis
+app.use(postApi);
+
+
 
 app.get("/", isLoggedIn,  (req, res) => {
 

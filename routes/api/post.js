@@ -18,6 +18,8 @@ router.get('/api/post',isLoggedIn, async (req,res) => {
 // To add new post
 router.post('/api/post', isLoggedIn, async (req,res) => {
 
+    // console.log(req.body);
+
     const post = {
         content: req.body.content,
         postedBy: req.user.username,

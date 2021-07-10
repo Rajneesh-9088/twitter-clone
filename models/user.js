@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 
-
-
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -17,17 +15,23 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         trim: true,
-        unique: true,
-        required: true
+        required: true,
+        unique: true
     },
     profilePic: {
         type: String,
         default: '/images/profilePic.jpeg'
-    }
-})
+    },
+    likes:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Post'
+        }
+    ]
+});
 
 userSchema.plugin(passportLocalMongoose);
 
-const User = mongoose.model("User",userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

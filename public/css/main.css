@@ -173,6 +173,12 @@ h1 {
   padding-right: 5px;
 }
 
+.modal .postContainer {
+  border: none;
+  padding:  0;
+  padding-top: var(--spacing);
+}
+
 /* .postButtonContainer button {
   border: none;
   background-color: white;

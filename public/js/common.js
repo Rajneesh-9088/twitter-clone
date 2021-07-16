@@ -31,6 +31,10 @@ $('.postsContainer').on('click','.likeButton',async(event)=>{
 
 })
 
+$('#replyModal').on('show.bs.modal',  () => {
+       console.log("Modal Opened");
+})
+
 
 function getPostIdFromElement(element){
 
@@ -73,8 +77,8 @@ function createPostHtml(postData) {
                             <span>${postData.content}</span>
                         </div>
                         <div class='postFooter'>
-                            <div class='postButtonContainer'>
-                                <button>
+                            <div class='postButtonContainer'  >
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#replyModal">
                                     <i class='far fa-comment'></i>
                                 </button>
                             </div>

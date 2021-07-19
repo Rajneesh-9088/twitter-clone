@@ -30,6 +30,7 @@ app.use(express.json());
 // Routes 
 
 const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 
 
 // APIs
@@ -67,6 +68,7 @@ app.get('/', isLoggedIn,(req, res) => {
 
 // Routes
 app.use(authRoutes);
+app.use(profileRoutes);
 
 
 // APIs

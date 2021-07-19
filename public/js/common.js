@@ -31,9 +31,33 @@ $('.postsContainer').on('click','.likeButton',async(event)=>{
 
 })
 
-$('#replyModal').on('show.bs.modal',  () => {
-       console.log("Modal Opened");
+$('#submitReplyButton').click( async (event) => {
+    
+    const element = $(event.target);
+    
+    const postText = $('#reply-text-container').val();
+
+    const replyTo = element.attr('data-id');
+
+    const postData = await axios.post('/api/post', {content: postText,replyTo: replyTo});
+
 })
+
+
+$("#replyModal").on("show.bs.modal", async (event) => {
+    const button = $(event.relatedTarget);
+    const postId = getPostIdFromElement(button);
+  
+    $("#submitReplyButton").attr("data-id", postId);
+  
+    const postData = await axios.get(`/api/posts/${postId}`);
+  
+    const html = createPostHtml(postData.data);
+  
+    $("#originalPostContainer").empty();
+  
+    $("#originalPostContainer").append(html);
+  });
 
 
 function getPostIdFromElement(element){
@@ -60,6 +84,24 @@ function createPostHtml(postData) {
     const displayName = postedBy.firstName + " " + postedBy.lastName;
     const timestamp = timeDifference(new Date(),new Date(postData.createdAt));
 
+    // const replyTo = postData.replyTo ? `Replying to <span style="color:#0099ff">${displayName}</span> `: "" ;
+    let replyFlag = "";
+  if (postData.replyTo && postData.replyTo._id) {
+    if (!postData.replyTo._id) {
+      return alert("Reply to is not populated");
+    } else if (!postData.replyTo.postedBy._id) {
+      return alert("Posted by is not populated");
+    }
+
+    const replyToUsername = postData.replyTo.postedBy.username;
+    replyFlag = `<div class='replyFlag'>
+                          Replying to <a href='/profile/${replyToUsername}'>@${replyToUsername}<a>
+                      </div>`;
+  }
+
+
+    // console.log(replyTo)
+
 
     return `<div class='post' data-id='${postData._id}'>
 
@@ -72,6 +114,7 @@ function createPostHtml(postData) {
                             <a href='/profile/${postedBy.username}' class='displayName'>${displayName}</a>
                             <span class='username'>@${postedBy.username}</span>
                             <span class='date'>${timestamp}</span>
+                            <div>${replyFlag}</div>
                         </div>
                         <div class='postBody'>
                             <span>${postData.content}</span>

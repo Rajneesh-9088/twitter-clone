@@ -7,7 +7,10 @@ const User = require('../../models/user');
 // Get all the post
 router.get('/api/post',isLoggedIn, async(req, res) => {
     
-    const posts = await Post.find({}).populate('postedBy');
+    const results = await Post.find({}).populate('postedBy').populate('replyTo');
+
+    const posts = await User.populate(results, {path: "replyTo.postedBy"});
+
 
     res.json(posts);
 })
@@ -17,14 +20,33 @@ router.get('/api/post',isLoggedIn, async(req, res) => {
 // Create the new post
 router.post('/api/post',isLoggedIn,async(req, res) => {
 
-    const post = {
+    let post = {
         postedBy: req.user,
         content:req.body.content
     }
 
+    if(req.body.replyTo){
+         post = {
+              ...post,
+              replyTo: req.body.replyTo
+         }
+    }
+
+
+
     const newPost=await Post.create(post);
     res.json(newPost);  
 })
+
+
+router.get('/api/posts/:id',  async (req,res) => {
+
+
+    const post = await (await Post.findById(req.params.id).populate('postedBy'))
+
+    res.status(200).json(post);
+})
+
 
 router.patch('/api/posts/:id/like',isLoggedIn,async(req,res)=>{
 

@@ -6,8 +6,12 @@ const User = require('../../models/user');
 
 // Get all the post
 router.get('/api/post',isLoggedIn, async(req, res) => {
+
+   const filter = req.query;
+
+  
     
-    const results = await Post.find({}).populate('postedBy').populate('replyTo');
+    const results = await Post.find(filter).populate('postedBy').populate('replyTo');
 
     const posts = await User.populate(results, {path: "replyTo.postedBy"});
 

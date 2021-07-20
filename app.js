@@ -12,6 +12,7 @@ const http = require('http');
 const server = http.createServer(app);
 const socketio = require('socket.io');
 const io = socketio(server);
+const Chat = require('./models/chat');
 
 
 mongoose.connect('mongodb://localhost:27017/twitter-clone',
@@ -85,14 +86,15 @@ app.use(postApiRoute);
 io.on('connection', (socket) => {
     console.log("connection established")
 
-    socket.on('send-msg', (data)=>{
-
-       
-          
+    socket.on('send-msg', async (data)=>{
+  
         io.emit('received-msg', {
             user: data.user,
-            msg: data.msg
+            msg: data.msg,
+            createdAt: new Date()
         })
+
+        await Chat.create({content:data.msg, user: data.user});
     })
 })
 

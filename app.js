@@ -7,7 +7,11 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const flash = require('connect-flash');
-const {isLoggedIn} = require('./middleware')
+const {isLoggedIn} = require('./middleware');
+const http = require('http');
+const server = http.createServer(app);
+const socketio = require('socket.io');
+const io = socketio(server);
 
 
 mongoose.connect('mongodb://localhost:27017/twitter-clone',
@@ -31,6 +35,7 @@ app.use(express.json());
 
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profileRoutes');
+const chatRoutes = require('./routes/chatRoutes');
 
 
 // APIs
@@ -69,6 +74,7 @@ app.get('/', isLoggedIn,(req, res) => {
 // Routes
 app.use(authRoutes);
 app.use(profileRoutes);
+app.use(chatRoutes);
 
 
 // APIs
@@ -76,8 +82,23 @@ app.use(profileRoutes);
 app.use(postApiRoute);
 
 
+io.on('connection', (socket) => {
+    console.log("connection established")
+
+    socket.on('send-msg', (data)=>{
+
+       
+          
+        io.emit('received-msg', {
+            user: data.user,
+            msg: data.msg
+        })
+    })
+})
 
 
-app.listen(3000, () => {
+
+
+server.listen(3000, () => {
     console.log("Server running at port 3000");
 })

@@ -1,13 +1,19 @@
 async function refreshPosts() {
     $('.postsContainer').empty();
     const posts = await axios.get('/api/post');
+
     
-    for (let post of posts.data) {
+        for (let post of posts.data) {
+
+            
         
-        const html = createPostHtml(post)
-        $(".postsContainer").prepend(html);
-        
-    }
+            const html = createPostHtml(post)
+            $(".postsContainer").prepend(html);
+            
+        }
+    
+    
+   
 }
 
 refreshPosts();
@@ -40,6 +46,8 @@ $('#submitReplyButton').click( async (event) => {
     const replyTo = element.attr('data-id');
 
     const postData = await axios.post('/api/post', {content: postText,replyTo: replyTo});
+
+    location.reload();
 
 })
 

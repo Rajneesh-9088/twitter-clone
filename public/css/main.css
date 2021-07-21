@@ -92,6 +92,9 @@ h1 {
   resize: none;
   font-size: 19px;
 }
+.textareaContainer textarea:focus {
+  outline: none;
+}
 
 #submitPostButton {
   background-color: var(--blue);
@@ -162,10 +165,12 @@ h1 {
   padding-right: 5px;
 }
 
-.postButtonContainer button:hover {
+.postButtonContainer button{
   background-color: #d4edff;
   color: var(--blue);
-  border-radius: 50%;
+  /* border-radius: 50%; */
+  border: none;
+  background: none;
 }
 
 .postButtonContainer.red button.active {
@@ -323,7 +328,6 @@ h1 {
   padding: 5px 10px;
   border-radius: 20px;
 }
-
 
 #all-msg-container {
   list-style: none;

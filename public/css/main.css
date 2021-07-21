@@ -324,6 +324,34 @@ h1 {
   border-radius: 20px;
 }
 
+
 #all-msg-container {
   list-style: none;
+}
+
+#all-msg-container li{
+  /* border: 1px solid #ccc; */
+  padding-top: 10px;
+  width: 70%;
+}
+
+#all-msg-container p{
+  margin: 0;
+  background-color: var(--buttonHoverBg);
+  padding:10px 5px;
+  border-radius: 15px;
+}
+
+#all-msg-container div span{
+  display: block;
+  font-size: 0.8rem;
+}
+
+#all-msg-container div{
+  display: flex;
+  justify-content: flex-end;
+}
+
+#all-msg-container li span:first-of-type{
+  font-weight: 700;
 }

@@ -24,4 +24,21 @@ router.get("/profile/:username", isLoggedIn, async (req, res) => {
   res.render("profilePage", { payload });
 });
 
+router.get("/follow/:userId/:profileId", async (req, res) => {
+  const { userId, profileId } = req.params;
+
+  // push profileId into the current users' following array
+
+  const currentUser = await User.findById(userId);
+  const profileUser = await User.findById(profileId);
+
+  currentUser.following.push(profileId);
+  profileUser.followers.push(currentUser);
+
+  await currentUser.save();
+  await profileUser.save();
+
+  res.redirect(`/profile/${profileUser.username}`);
+});
+
 module.exports = router;

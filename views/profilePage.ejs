@@ -31,13 +31,20 @@
                         <span class="displayName"><%=payload.user.firstName%> <%=payload.user.lastName%></span>
                         <span class="username">@<%=payload.user.username%></span>
                         <span class="description"></span>
+
+                        <%if(currentUser._id !== payload.user._id) {%>
+
+                        <a href="/follow/<%=currentUser._id%>/<%=payload.user._id %>">follow</a>
+
+                        <%}%>
+                        
                         <div class="followersContainer">
                             <a href="/profile/<%=payload.user.username%>/following">
-                                <span class="value">0</span>
+                                <span class="value"><%=payload.user.following.length%></span>
                                 <span>Following</span>
                             </a>
                             <a href="/profile/<%=payload.user.username%>/followers">
-                                <span class="value" id="followersValue">0</span>
+                                <span class="value"><%=payload.user.followers.length%></span>
                                 <span>Followers</span>
                             </a>
                         </div>

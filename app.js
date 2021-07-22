@@ -1,4 +1,5 @@
 const express = require('express');
+require("dotenv").config();
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
@@ -15,7 +16,7 @@ const io = socketio(server);
 const Chat = require('./models/chat');
 
 
-mongoose.connect('mongodb://localhost:27017/twitter-clone',
+mongoose.connect(process.env.MONGO_CONNECTION_URL,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -23,7 +24,7 @@ mongoose.connect('mongodb://localhost:27017/twitter-clone',
         useFindAndModify: false
 
     }).then(() => console.log("DB Connected"))
-    .catch(() => console.log(err));
+    .catch((err) => console.log(err));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
@@ -101,6 +102,6 @@ io.on('connection', (socket) => {
 
 
 
-server.listen(3000, () => {
+server.listen( process.env.PORT || 3000, () => {
     console.log("Server running at port 3000");
 })
